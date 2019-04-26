@@ -80,6 +80,7 @@ int main(int argc, char **argv)
       printf("%10d  %s\n", file_size, read_dir->d_name);
     }
     free(current_file);
+    free(temp);
   }
   closedir(opened_dir);
 
