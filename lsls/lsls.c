@@ -23,14 +23,8 @@ int main(int argc, char **argv)
   struct stat buffer;
   int dir_given;
 
-  if (argc > 2)
-  {
-    printf("Too Many Arguments!\nPlease Enter format as follows:\n\n ./lsls [DIRECTORY]\n\n");
-    printf("Example: ./lsls ../../Processes/\n\n");
-    exit(1);
-  }
   // Open directory
-  else if (argc == 2)
+  if (argc == 2)
   {
     // use directory provided
     dir_given = 1;
@@ -59,10 +53,15 @@ int main(int argc, char **argv)
     }
     else
     {
-      // current_file = strcpy(argv[1], read_dir->d_name);
-      // printf("%s   ", argv[1]);
-      current_file = concat(argv[1], read_dir->d_name);
-      // printf("%s  ", current_file);
+      char *temp = argv[1];
+      char *ending = "/";
+      
+      if (strcmp(&temp[(strlen(temp) - 1)], ending)) {
+        temp = concat(argv[1], ending);
+        current_file = concat(temp, read_dir->d_name);
+      } else {
+        current_file = concat(argv[1], read_dir->d_name);
+      }
     }
 
     stat(current_file, &buffer);
